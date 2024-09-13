@@ -17,7 +17,7 @@ CREATE TABLE aluno (
     adm BOOLEAN DEFAULT (FALSE)
 );
 
-CREATE TABLE objeto (
+CREATE TABLE item (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     matricula VARCHAR(14),
     nome VARCHAR(250),
