@@ -1,0 +1,28 @@
+Node.js + Express
+
+// instalar o express na pasta
+npm install -g express-generator
+
+// criar estrutura do projeto
+express -e --git nomeDoProjeto
+
+// instalar dependências do projeto
+npm i
+
+// para hotreload
+npm i nodemon
+
+// modificar packjson
+"start": "nodemon ./bin/www"
+
+// rodar aplicação
+npm start
+
+// a porta padrão é a 3000
+localhost:3000
+
+
+===============================================
+React Project
+
+npm create vite@latest frontend -- --template react
