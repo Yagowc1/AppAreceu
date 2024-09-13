@@ -3,12 +3,15 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+require('dotenv').config({path: '.env'})
 
 var indexRouter = require('./routes/index');
 var usuariosRouter = require('./routes/usuarios');
 var itensRouter = require('./routes/itens')
 
 var app = express();
+
+const db = require('./db')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
