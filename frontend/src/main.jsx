@@ -6,17 +6,20 @@ import './index.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Inicio from './pages/Inicio.jsx'
 import { SuapProvider } from './context/SuapContext.jsx'
+import { UsuarioProvider } from './context/UsuarioContext.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <SuapProvider>
-    <BrowserRouter>
-      <Routes>
-          <Route element={<App />}>
-            <Route path='/' element={<Inicio />}></Route>
-          </Route>
-      </Routes>
-    </BrowserRouter>
+    <UsuarioProvider>
+      <BrowserRouter>
+        <Routes>
+            <Route element={<App />}>
+              <Route path='/' element={<Inicio />}></Route>
+            </Route>
+        </Routes>
+      </BrowserRouter>
+    </UsuarioProvider>
     </SuapProvider>
   </StrictMode>
 )

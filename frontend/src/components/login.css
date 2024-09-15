@@ -84,8 +84,30 @@ body {
     transition: .1s linear;
 }
 
-.botao-logar:hover {
+.botao-modal {
+    width: 40%;
+    background-color: #61005D;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    font-size: 16px;
+    color: #FFFFFF;
+    cursor: pointer;
+    transition: .1s linear;
+}
+
+.botao-logar:hover, .botao-modal:hover {
     background-color: #95008e;
+}
+
+#modal {
+    /* margin: 1em; */
+    z-index: -10;
+    border: none;
+    outline: none;
+    border: 2px solid #D5D2D5;
+    border-radius: 4px;
+    padding: 5px;
 }
 
 .esqueceu-senha {

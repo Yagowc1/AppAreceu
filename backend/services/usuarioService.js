@@ -38,6 +38,7 @@ async function deletarAluno(matricula) {
 }
 
 async function fazerLoginAluno(usuario) {
+    console.log(usuario.matricula)
     const sql = 'SELECT * FROM aluno WHERE matricula LIKE ?'
     let response = await db.query(sql, usuario.matricula)
     response = response[0]

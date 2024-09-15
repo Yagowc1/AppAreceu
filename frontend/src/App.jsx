@@ -1,37 +1,46 @@
-import { useContext, useState } from 'react'
-import './login.css'
+import { useContext, useEffect } from 'react'
 import { Outlet } from 'react-router-dom'
 import { SuapContext } from './context/SuapContext'
+import { UsuarioContext } from './context/UsuarioContext'
+import Login from './components/Login'
 
 function App() {
   const {suap} = useContext(SuapContext)
+  const {usuario, setUsuario} = useContext(UsuarioContext)
+
+  console.log(usuario)
+
+  function carregarUsuario() {
+    console.log(localStorage.length)
+
+    if (localStorage.length > 3) {
+      setUsuario({
+        matricula: localStorage.getItem('matricula'),
+        nome: localStorage.getItem('nome'),
+        email: localStorage.getItem('email'),
+        senha: localStorage.getItem('senha'),
+        adm: localStorage.getItem('adm')
+      })
+    } else if (localStorage.length > 0) {
+      setUsuario({
+        email: localStorage.getItem('email'),
+        senha: localStorage.getItem('senha'),
+        adm: localStorage.getItem('adm')
+      })
+    }
+    
+  }
+
+  useEffect(() => {
+    carregarUsuario()
+  }, [])
 
   return (
     <>
-      {suap.isAuthenticated() ?
-          <Outlet />
+      {suap.isAuthenticated() || usuario.email ?
+        <Outlet />
       :
-      <div class="wrapper">
-        <form action="">
-            <div class="div-logo">
-                <img class="logo" src="AppAreceu Logo.png" />
-            </div>
-            <h1 class="titulo">AppAreceu?</h1>
-            <div class="input-box">
-                <input type="text" placeholder="Matrícula" required maxLength={14}/>
-                <span class="material-symbols-outlined">person</span>
-            </div>
-            <div class="input-box">
-                <input type="password" id='senha' name='senha' placeholder="Senha" required />
-                <span class="material-symbols-outlined">lock</span>
-            </div>
-            <button type="submit" class="botao-logar">Entrar</button>
-            <p class="esqueceu-senha"><a href="#">Esqueceu a senha?</a></p>
-        </form>
-        <a href={suap.getLoginURL()}>
-          Autorizar
-        </a>
-      </div>
+        <Login />
       }
     </>
   )

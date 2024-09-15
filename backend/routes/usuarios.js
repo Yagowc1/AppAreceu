@@ -37,6 +37,7 @@ router.delete('/aluno/:matricula', async function(req, res) {
 })
 
 router.post('/aluno/login', async function(req, res) {
+  console.log(req.body)
   const aluno = await usuarioService.fazerLoginAluno(req.body)
 
   if (aluno) {

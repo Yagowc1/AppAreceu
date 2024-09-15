@@ -1,10 +1,10 @@
 import { useState, useContext, useEffect,  } from 'react'
 import { SuapContext } from '../context/SuapContext'
+import { UsuarioContext } from '../context/UsuarioContext'
 
 function Inicio() {
     const {suap} = useContext(SuapContext)
-
-    const [usuario, setUsuario] = useState({})
+    const {usuario, setUsuario} = useContext(UsuarioContext)
 
     async function pegarDados(){
         const dados = await suap.getResource()
@@ -17,9 +17,9 @@ function Inicio() {
         })
     }
 
-    useEffect(() => {
-        pegarDados()
-    }, [])
+    // useEffect(() => {
+    //     pegarDados()
+    // }, [])
   return (
     <>
       <div className="card">
