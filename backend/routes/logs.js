@@ -9,8 +9,11 @@ const Log = require('../models/log')
 router.post('/post-log', async function (req, res) {
     let {item, tipo_chamado, responsavel} = req.body
     
+    date = new Date()
+    datetime = `${date.getDate()}-${(date.getMonth()+1)}-${date.getFullYear()} às ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
+
     let new_log = {
-        item, tipo_chamado, responsavel
+        item, tipo_chamado, responsavel, datetime
     }
 
     try {
@@ -22,3 +25,9 @@ router.post('/post-log', async function (req, res) {
 })
 
 module.exports = router
+
+/**
+ *      + currentdate.getHours() + ":"  
+                + currentdate.getMinutes() + ":" 
+                + currentdate.getSeconds()
+ */
