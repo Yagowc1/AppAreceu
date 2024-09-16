@@ -25,8 +25,6 @@ router.post('/item', async function(req, res, next) {
 
 // Atualizar um item
 router.put('/item/:id', async function(req, res) {
-  console.log(req.params.id)
-  console.log(req.body)
   const item = await itemService.atualizarItem(req.body, req.params.id)
 
   res.send(item)
