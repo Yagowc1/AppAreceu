@@ -1,8 +1,40 @@
 var express = require('express');
 var router = express.Router();
 
-router.get('/', function(req, res, next) {
-  res.send('Olá');
+const itemService = require('../services/itemService')
+
+// Receber todos os itens
+router.get('/itens', async function(req, res, next) {
+  const item = await itemService.getItens()
+  res.send(item);
 });
+
+// Receber um item especifico
+router.get('/item/:id', async function(req, res, next) {
+  const item = await itemService.getItem(req.params.matricula)
+  res.send(item);
+});
+
+// Enviar um item
+router.post('/item', async function(req, res, next) {
+  console.log(req.body)
+  await itemService.inserirItem(req.body)
+
+  res.sendStatus(200)
+})
+
+// Atualizar um item
+router.put('/item/:matricula', async function(req, res) {
+  const item = await itemService.atualizarItem(req.body, req.params.matricula)
+
+  res.send(item)
+}) 
+
+// Deletar um item
+router.delete('/item/:matricula', async function(req, res) {
+  await itemService.deletarItem(req.params.matricula)
+
+  res.send(200)
+})
 
 module.exports = router;
