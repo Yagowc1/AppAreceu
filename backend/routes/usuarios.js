@@ -19,6 +19,7 @@ router.get('/aluno/:matricula', async function(req, res, next) {
 });
 
 router.post('/aluno', async function(req, res, next) {
+  console.log(req.body)
   await usuarioService.inserirAluno(req.body)
 
   res.sendStatus(200)
@@ -48,6 +49,7 @@ router.post('/aluno/login', async function(req, res) {
 }) 
 
 router.post('/adm/login', async function(req, res) {
+  console.log(req.body)
   const adm = await usuarioService.fazerLoginAdm(req.body)
 
   if (adm) {
