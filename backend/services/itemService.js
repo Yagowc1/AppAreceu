@@ -20,15 +20,15 @@ async function inserirItem(Item) {
     return response[0]
 }
 
-async function atualizarItem(Item, matricula) {
-    const sql = 'UPDATE Item SET nome = ?, descricao = ?, categoria = ?, status_obj = ?, imagem = ? WHERE matricula LIKE ?'
-    const valores = [Item.nome, Item.descricao, Item.categoria, Item.status_obj, Item.imagem, matricula]
+async function atualizarItem(Item, id) {
+    const sql = 'UPDATE Item SET nome = ?, descricao = ?, categoria = ?, status_obj = ?, imagem = ?, matricula = ? WHERE id LIKE ?'
+    const valores = [Item.nome, Item.descricao, Item.categoria, Item.status_obj, Item.imagem, Item.matricula, id]
     const response = await db.query(sql, valores)
     return response[0]
 }
 
 async function deletarItem(id) {
-    const sql = 'DELETE FROM Item WHERE matricula LIKE ?'
+    const sql = 'DELETE FROM Item WHERE id LIKE ?'
     const response = await db.query(sql, id)
     return response[0]
 }

@@ -24,14 +24,16 @@ router.post('/item', async function(req, res, next) {
 })
 
 // Atualizar um item
-router.put('/item/:matricula', async function(req, res) {
+router.put('/item/:id', async function(req, res) {
+  console.log(req.params.id)
+  console.log(req.body)
   const item = await itemService.atualizarItem(req.body, req.params.id)
 
   res.send(item)
 }) 
 
 // Deletar um item
-router.delete('/item/:matricula', async function(req, res) {
+router.delete('/item/:id', async function(req, res) {
   await itemService.deletarItem(req.params.id)
 
   res.send(200)
