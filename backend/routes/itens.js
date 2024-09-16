@@ -11,7 +11,7 @@ router.get('/itens', async function(req, res, next) {
 
 // Receber um item especifico
 router.get('/item/:id', async function(req, res, next) {
-  const item = await itemService.getItem(req.params.matricula)
+  const item = await itemService.getItem(req.params.id)
   res.send(item);
 });
 
@@ -25,14 +25,14 @@ router.post('/item', async function(req, res, next) {
 
 // Atualizar um item
 router.put('/item/:matricula', async function(req, res) {
-  const item = await itemService.atualizarItem(req.body, req.params.matricula)
+  const item = await itemService.atualizarItem(req.body, req.params.id)
 
   res.send(item)
 }) 
 
 // Deletar um item
 router.delete('/item/:matricula', async function(req, res) {
-  await itemService.deletarItem(req.params.matricula)
+  await itemService.deletarItem(req.params.id)
 
   res.send(200)
 })
