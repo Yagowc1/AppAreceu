@@ -15,6 +15,14 @@ router.get('/item/:id', async function(req, res, next) {
   res.send(item);
 });
 
+// Receber um item por categoria
+router.get('/itens/:tipo/:categoria', async function(req, res, next) {
+  // console.log(req.params.tipo, req.params.categoria)
+  const item = await itemService.getItemCategoria(req.params.tipo, req.params.categoria);
+  console.log(item)
+  res.send(item);
+});
+
 // Enviar um item
 router.post('/item', async function(req, res, next) {
   console.log(req.body)

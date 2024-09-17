@@ -1,14 +1,21 @@
 import { useState, useContext, useEffect } from 'react'
 import { SuapContext } from '../context/SuapContext'
 import { UsuarioContext } from '../context/UsuarioContext'
+import ListaGrid from '../components/ListaGrid.jsx'
 import "./inicio.css";
 
 function Inicio() {
   const { suap } = useContext(SuapContext)
   const { usuario, setUsuario } = useContext(UsuarioContext)
 
-  const [tipoItem, setTipoItem] = useState('achado');
+  const [tipoItem, setTipoItem] = useState('achados');
   const [tipoCategoria, setTipoCategoria] = useState('celulares');
+
+  const [items, setItems] = useState([]);
+
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState([]);
 
   function persistirUsuarioTemp(usuario) {
     console.log('opa')
@@ -101,29 +108,55 @@ function Inicio() {
     }
   }, [usuario])
 
+  // useEffect(()=> {
+  //   console.log(tipoItem);
+  //   console.log(tipoCategoria);
+
+  //   const response = fetch(`http://localhost:3000/itens/itens/${tipoItem}/${tipoCategoria}`);  
+
+  //   console.log(response.json)
+  // }, [tipoCategoria, tipoItem]);
+
   function selecionarTipo(tipo) {
     setTipoItem(tipo);
-    console.log(tipo)
   }
 
   function selecionarCategoria(tipo) {
     setTipoCategoria(tipo);
-    console.log(tipo)
   }
 
-  const itens = [
-    { id: 1, nome: 'Item 1', categoria: 'celulares', tipo: 'achados' },
-    { id: 2, nome: 'Item 2', categoria: 'óculos', tipo: 'perdidos' },
-    { id: 3, nome: 'Item 3', categoria: 'livros', tipo: 'achados' },
-    { id: 4, nome: 'Item 4', categoria: 'documentos', tipo: 'perdidos' },
-    // Adicione mais itens aqui
-  ]
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log(tipoItem);
+      console.log(tipoCategoria);
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const response = await fetch(`http://localhost:3000/itens/itens/${tipoItem}/${tipoCategoria}`);
+        if (!response.ok) {
+          throw new Error('Erro ao buscar dados');
+        }
+        const result = await response.json();
+        setData(result);
+        console.log(result)
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [tipoItem, tipoCategoria]);
+
 
   return (
     <>
       {usuario.email ?
         <div>
-           <div className="header-container">
+          <div className="header-container">
             <header className="header">
               <a href="#"><img src="AppAreceu Logo.png" className="logo"></img></a>
 
@@ -131,24 +164,24 @@ function Inicio() {
                 <a href="#"><span className="material-icons ajuda">help_outline</span></a>
                 <a href="#">sair</a>
                 <a href="/abrirChamado">
-                <button className="botao-chamado">abrir chamado</button>
+                  <button className="botao-chamado">abrir chamado</button>
                 </a>
-                
+
               </nav>
             </header>
           </div>
 
           <main className="main">
             <div id="switch-flex-ajustado">
-              <button className="switch-item selecionado" 
-              type='button' 
-              onClick={() => selecionarTipo('achado')}
+              <button className="switch-item selecionado"
+                type='button'
+                onClick={() => selecionarTipo('achado')}
               >achados</button>
-              <button className="switch-item" type='button' 
-              onClick={() => selecionarTipo('perdido')}
+              <button className="switch-item" type='button'
+                onClick={() => selecionarTipo('perdidos')}
               >perdidos</button>
               <button className="switch-item" type='button'
-              onClick={() => selecionarTipo('todos')}
+                onClick={() => selecionarTipo('todos')}
               >todos</button>
             </div>
             <div className="categorias-flex">
@@ -196,43 +229,55 @@ function Inicio() {
               </div>
             </div>
 
+            {/* <div className="lista-grid">
+              <div className="lista-item">
+                <a href="#">
+                  <img src="banana.png"></img>
+                    <p>Item 1</p>
+                </a>
+              </div>
+              <div className="lista-item">
+                <a href="#">
+                  <img src="banana.png"></img>
+                    <p>Item 1</p>
+                </a>
+              </div>
+              <div className="lista-item">
+                <a href="#">
+                  <img src="banana.png"></img>
+                    <p>Item 1</p>
+                </a>
+              </div>
+              <div className="lista-item">
+                <a href="#">
+                  <img src="banana.png"></img>
+                    <p>Item 1</p>
+                </a>
+              </div>
+              <div className="lista-item">
+                <a href="#">
+                  <img src="banana.png"></img>
+                    <p>Item 1</p>
+                </a>
+              </div>
+              <div className="lista-item">
+                <a href="#">
+                  <img src="banana.png"></img>
+                    <p>Item 1</p>
+                </a>
+              </div>
+            </div> */}
+
             <div className="lista-grid">
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
+              {data.map(item => (
+                <div key={item.id} className="lista-item">
+                  <a href="#">
+                    <img src='banana.png' alt={item.nome} />
+                    <p>{item.nome}</p>
+                    <p>{item.descricao}</p>
+                  </a>
+                </div>
+              ))}
             </div>
           </main>
         </div>

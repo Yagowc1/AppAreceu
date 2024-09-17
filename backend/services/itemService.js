@@ -13,6 +13,14 @@ async function getItem(id) {
     return response[0]
 }
 
+// Receber um item por categoria
+async function getItemCategoria(tipo, categoria) {
+    const sql = 'SELECT * FROM Item WHERE categoria = ? AND status_obj = ?';
+    const response = await db.query(sql, [categoria, tipo]);
+    return response[0];
+  }
+  
+
 async function inserirItem(Item) {
     const sql = 'INSERT INTO Item (matricula, nome, descricao, categoria, status_obj, imagem) VALUES (?, ?, ?, ?, ?, ?)'
     const valores = [Item.matricula, Item.nome, Item.descricao, Item.categoria, Item.status_obj, Item.imagem]
@@ -36,6 +44,7 @@ async function deletarItem(id) {
 module.exports = {
     getItens,
     getItem,
+    getItemCategoria,
     inserirItem,
     atualizarItem,
     deletarItem
