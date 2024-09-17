@@ -1,10 +1,12 @@
 import { useState, useContext, useEffect  } from 'react'
 import { SuapContext } from '../context/SuapContext'
 import { UsuarioContext } from '../context/UsuarioContext'
+import "./inicio.css"; // Importando o CSS
 
 function Inicio() {
   const {suap} = useContext(SuapContext)
   const {usuario, setUsuario} = useContext(UsuarioContext)
+  const [tipoItem, setTipoItem] = useState('achado');
 
   function persistirUsuarioTemp(usuario) {
     console.log('opa')
@@ -89,7 +91,7 @@ function Inicio() {
     } else {
       alert('As senhas não são iguais!')
     }
-}
+  }
 
   useEffect(() => {
     if (usuario.matricula && suap.isAuthenticated()) {
@@ -100,12 +102,12 @@ function Inicio() {
   return (
     <>
       {usuario.email ?
-        <div className="card">
-          <h1>Olá {usuario.nome}</h1>
-          <p>Matrícula: {usuario.matricula}</p>
-          <p>Email: {usuario.email}</p>
-        </div> 
+      <div>
+        <h1>Oi</h1>
+      </div>
+        
       :
+
       <div className="wrapper">
         <form onSubmit={pegarDados} method='post'>
             <h1 className="titulo">Digite uma nova senha</h1>
