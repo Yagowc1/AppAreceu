@@ -2,9 +2,15 @@ var express = require('express')
 var router = express.Router()
 const Log = require('../models/log')
 
-// router.get('/', async function(req, res){
-//     res.render('logs', {title:'Logs'})
-// })
+router.get('/', async function(req, res){
+    try {
+        const logs_cadastrados = await Log.find()
+        res.status(200).json({logs:logs_cadastrados})
+
+    } catch (error) {
+        res.status(500).json({error:error})
+    }
+})
 
 router.post('/post-log', async function (req, res) {
     let {item, tipo_chamado, responsavel} = req.body
