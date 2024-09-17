@@ -254,7 +254,7 @@ function Inicio() {
             <div className="lista-grid">
               {data.map(item => (
                 <div key={item.id} className="lista-item" onClick={() => visualizarItem(item)}>
-                  <img src='banana.png' alt={item.nome} />
+                  <img src={item.imagem ? item.imagem : 'banana.png'} alt={item.nome} />
                   <p>{item.nome}</p>
                   <p>{item.descricao}</p>
                 </div>

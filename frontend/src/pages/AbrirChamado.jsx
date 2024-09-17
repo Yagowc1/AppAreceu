@@ -19,7 +19,7 @@ function AbrirChamado() {
       data: data,
       categoria: categoria,
       descricao: descricao,
-      tipo: tipoItem
+      status_obj: tipoItem
     };
 
     // Exibe os dados no console
@@ -105,7 +105,7 @@ function AbrirChamado() {
 
                 <div className="switch-flex">
                   <button
-                    className={`switch-item ${tipoItem === 'achado' ? 'selecionado' : ''}`}
+                    className={`switch-item`}
                     type='button'
                     onClick={() => selecionarTipo('achado')}
                   >
@@ -113,7 +113,7 @@ function AbrirChamado() {
                   </button>
 
                   <button
-                    className={`switch-item ${tipoItem === 'perdido' ? 'selecionado' : ''}`}
+                    className={`switch-item`}
                     type='button'
                     onClick={() => selecionarTipo('perdido')}
                   >
