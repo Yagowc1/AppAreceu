@@ -9,10 +9,11 @@
 
 a {
     color: #000000;
-    text-decoration: none; /* no underline */
+    text-decoration: none;
+    /* no underline */
 }
 
-body {
+#mainLogin {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,7 +21,7 @@ body {
 }
 
 .wrapper {
-    width: 420px;
+    width: 420px !important;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     padding: 30px 40px;
@@ -97,16 +98,24 @@ body {
     margin: 1em 16px;
 }
 
-.botao-logar:hover, .botao-modal:hover {
+.botao-logar:hover,
+.botao-modal:hover {
     background-color: #95008e;
 }
 
+#centralizarModal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -100px;
+}
+
 #modal {
-    width: 420px;
+    width: 420px !important;
     margin: 1em 0;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 60px;
-    padding: 30px 40px;
+    padding: 40px;
     outline: none;
     border: 2px solid #D5D2D5;
     border-radius: 4px;

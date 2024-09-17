@@ -13,6 +13,13 @@ async function getItem(id) {
     return response[0]
 }
 
+// Receber o email vinculado ao item
+async function getItemEmail(id) {
+    const sql = `SELECT aluno.email FROM item JOIN aluno ON item.matricula = aluno.matricula WHERE item.id = ${id}`;
+    const response = await db.query(sql)
+    return response[0]
+}
+
 // Receber um item por categoria
 async function getItemCategoria(tipo, categoria) {
     const sql = 'SELECT * FROM Item WHERE categoria = ? AND status_obj = ?';
@@ -45,6 +52,7 @@ module.exports = {
     getItens,
     getItem,
     getItemCategoria,
+    getItemEmail,
     inserirItem,
     atualizarItem,
     deletarItem

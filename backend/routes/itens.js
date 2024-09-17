@@ -23,6 +23,13 @@ router.get('/itens/:tipo/:categoria', async function(req, res, next) {
   res.send(item);
 });
 
+// Receber o email vinculado ao item
+router.get('/item/email/:id', async function(req, res, next) {
+  const item = await itemService.getItemEmail(req.params.id)
+  console.log(item)
+  res.send(item);
+});
+
 // Enviar um item
 router.post('/item', async function(req, res, next) {
   console.log(req.body)

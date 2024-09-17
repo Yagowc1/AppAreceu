@@ -2,7 +2,6 @@ import { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { SuapContext } from '../context/SuapContext'
 import { UsuarioContext } from '../context/UsuarioContext'
-import ListaGrid from '../components/ListaGrid.jsx'
 import "./inicio.css";
 
 function Inicio() {

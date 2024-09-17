@@ -1,20 +1,34 @@
 import { useLocation, useNavigate } from 'react-router-dom'; // Importar useLocation e useNavigate
+import { useEffect, useState } from 'react'
 import "./visualizarItem.css"; // Importando o CSS
 
 function VisualizarItem() {
   const location = useLocation(); // Acessando os dados passados via state
   const navigate = useNavigate(); // Para navegações futuras
   const { item } = location.state || {}; // Desestruturar o item passado pelo state
+  const [email, setEmail] = useState([]);
 
   // Função para logout
   function logoutUsuario() {
     localStorage.clear();
   }
 
-  // Verificação para garantir que o item exista antes de renderizar
-  if (!item) {
-    return <p>Item não encontrado. Por favor, retorne à página inicial.</p>;
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/itens/item/email/${item.id}`);
+        if (!response.ok) {
+          throw new Error('Erro ao buscar dados');
+        }
+        const result = await response.json();
+        setEmail(result[0].email)
+      } catch (err) {
+        console.log('erro, bro ', err)
+      }
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -41,8 +55,7 @@ function VisualizarItem() {
             <h2>Descrição do item</h2>
             <p>{item.descricao}</p>
             <h2>Informação para contato</h2>
-            <p><b>Email:</b> {item.emailContato || "Não informado"}</p>
-            <p><b>Telefone:</b> {item.telefoneContato || "Não informado"}</p>
+            <p><b>Email:</b> {email}</p>
             <div className="botao-flex">
               <button onClick={() => navigate(`/editarItem/${item.id}`)}>Atualizar</button>
               <button>Deletar</button>
