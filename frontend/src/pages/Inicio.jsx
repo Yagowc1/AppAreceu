@@ -6,7 +6,6 @@ import "./inicio.css"; // Importando o CSS
 function Inicio() {
   const {suap} = useContext(SuapContext)
   const {usuario, setUsuario} = useContext(UsuarioContext)
-  const [tipoItem, setTipoItem] = useState('achado');
 
   function persistirUsuarioTemp(usuario) {
     console.log('opa')
