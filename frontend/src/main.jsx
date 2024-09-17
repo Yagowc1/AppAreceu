@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Inicio from './pages/Inicio.jsx'
 import AbrirChamado from './pages/AbrirChamado.jsx'
 import VisualizarItem from './pages/VisualizarItem.jsx'
+import AtualizarItem from './pages/AtualizarItem.jsx'
 import { SuapProvider } from './context/SuapContext.jsx'
 import { UsuarioProvider } from './context/UsuarioContext.jsx'
 
@@ -20,6 +21,7 @@ createRoot(document.getElementById('root')).render(
               <Route path='/' element={<Inicio />}></Route>
               <Route path='/abrirchamado' element={<AbrirChamado />}></Route>
               <Route path='/visualizaritem' element={<VisualizarItem />}></Route>
+              <Route path='/atualizarItem/:id' element={<AtualizarItem/>}></Route>
             </Route>
         </Routes>
       </BrowserRouter>

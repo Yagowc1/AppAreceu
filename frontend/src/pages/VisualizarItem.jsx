@@ -4,9 +4,9 @@ import "./visualizarItem.css"; // Importando o CSS
 
 function VisualizarItem() {
   const location = useLocation(); // Acessando os dados passados via state
-  const navigate = useNavigate(); // Para navegações futuras
   const { item } = location.state || {}; // Desestruturar o item passado pelo state
   const [email, setEmail] = useState([]);
+  const navigate = useNavigate(); // Navegação
 
   // Função para logout
   function logoutUsuario() {
@@ -21,6 +21,7 @@ function VisualizarItem() {
           throw new Error('Erro ao buscar dados');
         }
         const result = await response.json();
+        console.log(result)
         setEmail(result[0].email)
       } catch (err) {
         console.log('erro, bro ', err)
@@ -28,7 +29,7 @@ function VisualizarItem() {
     };
 
     fetchData();
-  }, []);
+  }, [item]);
 
   return (
     <>
@@ -57,7 +58,7 @@ function VisualizarItem() {
             <h2>Informação para contato</h2>
             <p><b>Email:</b> {email}</p>
             <div className="botao-flex">
-              <button onClick={() => navigate(`/editarItem/${item.id}`)}>Atualizar</button>
+              <button onClick={() => navigate(`/atualizarItem/${item.id}`)}>Atualizar</button>
               <button>Deletar</button>
             </div>
           </div>
