@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
 import { SuapContext } from '../context/SuapContext'
 import { UsuarioContext } from '../context/UsuarioContext'
 import ListaGrid from '../components/ListaGrid.jsx'
@@ -16,6 +17,8 @@ function Inicio() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState([]);
+
+  const navigate = useNavigate(); 
 
   function persistirUsuarioTemp(usuario) {
     console.log('opa')
@@ -155,6 +158,11 @@ function Inicio() {
     localStorage.clear()
   }
 
+  // Função para navegar para a página de visualização com os dados do item
+  const visualizarItem = (item) => {
+    navigate('/visualizarItem', { state: { item } });
+  };
+
   return (
     <>
       {usuario.email ?
@@ -233,52 +241,23 @@ function Inicio() {
             </div>
 
             {/* <div className="lista-grid">
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-              <div className="lista-item">
-                <a href="#">
-                  <img src="banana.png"></img>
-                    <p>Item 1</p>
-                </a>
-              </div>
-            </div> */}
-
-            <div className="lista-grid">
               {data.map(item => (
                 <div key={item.id} className="lista-item">
-                  <a href="#">
+                  <a href="/visualizarItem">
                     <img src='banana.png' alt={item.nome} />
                     <p>{item.nome}</p>
                     <p>{item.descricao}</p>
                   </a>
+                </div>
+              ))}
+            </div> */}
+
+            <div className="lista-grid">
+              {data.map(item => (
+                <div key={item.id} className="lista-item" onClick={() => visualizarItem(item)}>
+                  <img src='banana.png' alt={item.nome} />
+                  <p>{item.nome}</p>
+                  <p>{item.descricao}</p>
                 </div>
               ))}
             </div>
