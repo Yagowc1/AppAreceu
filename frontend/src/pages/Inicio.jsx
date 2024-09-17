@@ -151,6 +151,9 @@ function Inicio() {
     fetchData();
   }, [tipoItem, tipoCategoria]);
 
+  function logoutUsuario() {
+    localStorage.clear()
+  }
 
   return (
     <>
@@ -162,7 +165,7 @@ function Inicio() {
 
               <nav className="navbar">
                 <a href="#"><span className="material-icons ajuda">help_outline</span></a>
-                <a href="#">sair</a>
+                <a href="/" onClick={logoutUsuario}>sair</a>
                 <a href="/abrirChamado">
                   <button className="botao-chamado">abrir chamado</button>
                 </a>
@@ -175,7 +178,7 @@ function Inicio() {
             <div id="switch-flex-ajustado">
               <button className="switch-item selecionado"
                 type='button'
-                onClick={() => selecionarTipo('achado')}
+                onClick={() => selecionarTipo('achados')}
               >achados</button>
               <button className="switch-item" type='button'
                 onClick={() => selecionarTipo('perdidos')}
