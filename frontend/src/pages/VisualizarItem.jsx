@@ -31,6 +31,11 @@ function VisualizarItem() {
     fetchData();
   }, [item]);
 
+  function deletarItem() {
+    fetch(`http://localhost:3000/itens/item/${item.id}`, { method: 'DELETE' })
+      .then(() => alert('Deletado com sucesso')).then(window.location.href = '/');
+  }
+
   return (
     <>
       <div>
@@ -59,7 +64,9 @@ function VisualizarItem() {
             <p><b>Email:</b> {email}</p>
             <div className="botao-flex">
               <button onClick={() => navigate(`/atualizarItem/${item.id}`)}>Atualizar</button>
-              <button>Deletar</button>
+              {/* <a href="/"> */}
+              <button onClick={deletarItem}>Deletar</button>
+              {/* </a> */}
             </div>
           </div>
         </main>
