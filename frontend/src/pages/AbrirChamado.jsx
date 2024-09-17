@@ -15,7 +15,7 @@ function AbrirChamado() {
 
     const chamadoData = {
       nome: nome,
-      imagem: img.name,
+      imagem: img ? img.name : null,
       data: data,
       categoria: categoria,
       descricao: descricao,
@@ -57,7 +57,7 @@ function AbrirChamado() {
         <div>
             <div className="header-container">
               <header className="header">
-                  <a href="#"><img src="AppAreceu Logo.png" className="logo" alt="Logo"></img></a>
+                  <a href="/"><img src="AppAreceu Logo.png" className="logo" alt="Logo"></img></a>
               </header>
             </div>
 
