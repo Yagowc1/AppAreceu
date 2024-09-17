@@ -1,5 +1,17 @@
 var express = require('express');
 var router = express.Router();
+const multer  = require('multer')
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}_${file.originalname}`)
+  }
+})
+
+const upload = multer({ storage });
 
 const itemService = require('../services/itemService')
 
@@ -50,6 +62,10 @@ router.delete('/item/:id', async function(req, res) {
   await itemService.deletarItem(req.params.id)
 
   res.send(200)
+})
+
+router.post('/upload', upload.single("img"), function(req, res) {
+  res.send(req.file.filename)
 })
 
 module.exports = router;
