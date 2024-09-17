@@ -1,37 +1,51 @@
-import { useState, useContext, useEffect  } from 'react'
+import { useState } from 'react';
 import "./abrirChamado.css"; // Importando o CSS
 
 function AbrirChamado() {
-
   const [tipoItem, setTipoItem] = useState('achado');
 
-  function abrirChamado(e) {
+  async function abrirChamado(e) {
     e.preventDefault();
-    console.log('confia')
 
-     // Coleta os valores dos inputs
     const nome = document.getElementById('nome').value;
-    const img = document.getElementById('img').files[0]; // Para arquivos, usamos files[0]
+    const img = document.getElementById('img').files[0];
     const data = document.getElementById('data').value;
     const categoria = document.getElementById('categoria').value;
     const descricao = document.getElementById('descricao').value;
 
-    // Cria um objeto FormData
-    const formData = new FormData();
-    formData.append('nome', nome);
-    if (img) {
-      formData.append('img', img);
-    }
-    formData.append('data', data);
-    formData.append('categoria', categoria);
-    formData.append('descricao', descricao);
+    const chamadoData = {
+      nome: nome,
+      imagem: img.name,
+      data: data,
+      categoria: categoria,
+      descricao: descricao,
+      tipo: tipoItem
+    };
 
-    // Exibe os valores no console
-    console.log('Dados do formulário:');
-    for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
+    // Exibe os dados no console
+    console.log(chamadoData)
+
+    // Envia os dados para o servidor
+    try {
+      const response = await fetch('http://localhost:3000/itens/item', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(chamadoData),
+      })
+
+      if (response.ok) {
+        const result = await response.text();
+        console.log('Resposta do servidor:', result);
+        alert('Cadastrado com sucesso')
+      } else {
+        console.error('Erro ao enviar dados:', response.statusText);
+        }
+      } 
+    catch (error) {
+      console.error('Erro na requisição:', error);
     }
-    console.log(tipoItem)
   }
 
   function selecionarTipo(tipo) {
@@ -43,7 +57,7 @@ function AbrirChamado() {
         <div>
             <div className="header-container">
               <header className="header">
-                  <a href="#"><img src="AppAreceu Logo.png" className="logo"></img></a>
+                  <a href="#"><img src="AppAreceu Logo.png" className="logo" alt="Logo"></img></a>
               </header>
             </div>
 
@@ -58,7 +72,7 @@ function AbrirChamado() {
                   </div>
 
                   <div className="input-box img-flex">
-                      <label htmlFor="img" id="labelImg">selecionar imagem</label><br/>
+                      <label htmlFor="img" id="labelImg">Selecionar imagem</label><br/>
                       <input type="file" id="img"/>
                   </div>
                 </div>
@@ -72,7 +86,7 @@ function AbrirChamado() {
                   <div className="input-box">
                       <label htmlFor="categoria">Categoria do item:</label><br/>
                       <select id="categoria" defaultValue='outro'>
-                          <option value="outro" disabled>selecione a catergoria</option>
+                          <option value="outro" disabled>Selecione a categoria</option>
                           <option value="celular">celular</option>
                           <option value="oculos">óculos</option>
                           <option value="livro">livro</option>
@@ -90,26 +104,25 @@ function AbrirChamado() {
                 </div>
 
                 <div className="switch-flex">
-                <button
-                  className={`switch-item ${tipoItem === 'achado' ? 'selecionado' : ''}`}
-                  type='button'
-                  onClick={() => selecionarTipo('achado')}
-                >
-                  achados
-                </button>
+                  <button
+                    className={`switch-item ${tipoItem === 'achado' ? 'selecionado' : ''}`}
+                    type='button'
+                    onClick={() => selecionarTipo('achado')}
+                  >
+                    Achados
+                  </button>
 
-                <button
-                  className={`switch-item ${tipoItem === 'perdido' ? 'selecionado' : ''}`}
-                  type='button'
-                  onClick={() => selecionarTipo('perdido')}
-                >
-                  perdidos
-                </button>
-              </div>
-
+                  <button
+                    className={`switch-item ${tipoItem === 'perdido' ? 'selecionado' : ''}`}
+                    type='button'
+                    onClick={() => selecionarTipo('perdido')}
+                  >
+                    Perdidos
+                  </button>
+                </div>
 
                 <div className="div-botao">
-                  <button className="botao-enviar" type='submit'>enviar</button>
+                  <button className="botao-enviar" type='submit'>Enviar</button>
                 </div>
 
               </form>
@@ -119,4 +132,4 @@ function AbrirChamado() {
   )
 }
 
-export default AbrirChamado
+export default AbrirChamado;
