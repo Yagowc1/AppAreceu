@@ -1,10 +1,11 @@
 import { useParams } from 'react-router-dom'; // Importar useParams
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import "./abrirChamado.css"; // Importando o CSS
 
 function AtualizarItem() {
   const { id } = useParams(); // Acessando o id da URL
   const [tipoItem, setTipoItem] = useState('achado');
+  const [matricula, setMatricula] = useState([]);
 
   async function abrirChamado(e) {
     e.preventDefault();
@@ -22,7 +23,8 @@ function AtualizarItem() {
       data: data,
       categoria: categoria,
       descricao: descricao,
-      status_obj: tipoItem
+      status_obj: tipoItem,
+      matricula: matricula
     };
 
     // Exibe os dados no console
@@ -49,6 +51,24 @@ function AtualizarItem() {
       console.error('Erro na requisição:', error);
     }
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:3000/itens/item/${id}`);
+        if (!response.ok) {
+          throw new Error('Erro ao buscar dados');
+        }
+        const result = await response.json();
+        console.log(result[0].matricula)
+        setMatricula(result[0].matricula)
+      } catch (err) {
+        console.log('erro, bro ', err)
+      }
+    };
+
+    fetchData();
+  }, [id]);
 
   function selecionarTipo(tipo) {
     setTipoItem(tipo);
@@ -107,7 +127,7 @@ function AtualizarItem() {
 
             <div className="switch-flex">
               <button
-                className={`switch-item ${tipoItem === 'achado' ? 'selecionado' : ''}`}
+                className={`switch-item`}
                 type='button'
                 onClick={() => selecionarTipo('achados')}
               >
@@ -115,7 +135,7 @@ function AtualizarItem() {
               </button>
 
               <button
-                className={`switch-item ${tipoItem === 'perdido' ? 'selecionado' : ''}`}
+                className={`switch-item`}
                 type='button'
                 onClick={() => selecionarTipo('perdidos')}
               >
