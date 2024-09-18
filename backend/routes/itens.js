@@ -78,6 +78,7 @@ router.delete('/item/:id', async function (req, res) {
 
 router.post('/upload', upload.single("img"), function(req, res) {
   res.send(req.file.filename)
+})
 
 // Pegar os logs
 router.get('/logs', async (req, res, next) => {
