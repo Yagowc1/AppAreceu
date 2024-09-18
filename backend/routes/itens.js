@@ -1,6 +1,21 @@
 var express = require('express');
 var router = express.Router();
+
+const multer  = require('multer')
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'public/uploads/')
+  },
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}_${file.originalname}`)
+  }
+})
+
+const upload = multer({ storage });
+
 const Logs = require('../models/Logs')
+
 
 const itemService = require('../services/itemService')
 
@@ -60,6 +75,10 @@ router.delete('/item/:id', async function (req, res) {
   res.send(200)
 })
 
+
+router.post('/upload', upload.single("img"), function(req, res) {
+  res.send(req.file.filename)
+
 // Pegar os logs
 router.get('/logs', async (req, res, next) => {
   try {
@@ -86,6 +105,7 @@ router.post('/logs/novo', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error })
   }
+
 })
 
 module.exports = router;

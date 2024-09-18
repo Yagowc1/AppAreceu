@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import "./abrirChamado.css"; // Importando o CSS
+import axios from 'axios'
 
 function AbrirChamado() {
   const [tipoItem, setTipoItem] = useState('achado');
@@ -8,14 +9,22 @@ function AbrirChamado() {
     e.preventDefault();
 
     const nome = document.getElementById('nome').value;
-    const img = document.getElementById('img').files[0];
+    const imagem = document.getElementById('img').files[0];
+    let img = null
     const data = document.getElementById('data').value;
     const categoria = document.getElementById('categoria').value;
     const descricao = document.getElementById('descricao').value;
 
+    if (imagem) {
+      const formData = new FormData()
+      formData.append('img', imagem)
+      img = await axios.post('http://localhost:3000/itens/upload', formData)
+      img = img.data
+    }
+
     const chamadoData = {
       nome: nome,
-      imagem: img ? img.name : null,
+      imagem: img,
       data: data,
       categoria: categoria,
       descricao: descricao,
@@ -23,7 +32,7 @@ function AbrirChamado() {
     };
 
     // Exibe os dados no console
-    console.log(chamadoData)
+    console.log("chamadoData:", chamadoData)
 
     //   // Envia os dados para o servidor
     //   try {
