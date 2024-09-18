@@ -31,13 +31,20 @@ router.get('/item/email/:id', async function (req, res, next) {
   res.send(item);
 });
 
-// Enviar um item
+// Inserir novo item
 router.post('/item', async function (req, res, next) {
-  console.log(req.body)
-  await itemService.inserirItem(req.body)
+  try {
+    console.log(req.body);
 
-  res.sendStatus(200)
-})
+    // Insere o item e captura o ID gerado
+    const resultado = await itemService.inserirItem(req.body);
+
+    // Retorna o ID gerado
+    res.status(200).json({ id: resultado.insertId });
+  } catch (error) {
+    next(error); // Tratamento de erro
+  }
+});
 
 // Atualizar um item
 router.put('/item/:id', async function (req, res) {
