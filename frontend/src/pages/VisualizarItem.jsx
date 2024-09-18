@@ -53,7 +53,7 @@ function VisualizarItem() {
         <main id='main-visualizaritem'>
           <div className="imagem">
             {/* Exibindo a imagem do item */}
-            <img src={"banana.png"} alt={item.nome}></img>
+            <img src={`http://localhost:3000/uploads/${item.imagem}`} alt={item.nome}></img>
           </div>
           <div className="info">
             {/* Exibindo as informações do item */}
