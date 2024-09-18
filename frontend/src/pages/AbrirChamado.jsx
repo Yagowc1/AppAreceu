@@ -4,7 +4,7 @@ import axios from 'axios'
 import { UsuarioContext } from '../context/UsuarioContext';
 
 function AbrirChamado() {
-  const [tipoItem, setTipoItem] = useState('achado');
+  const [tipoItem, setTipoItem] = useState('achados');
   const { usuario, setUsuario } = useContext(UsuarioContext)
 
   async function abrirChamado(e) {
@@ -79,6 +79,7 @@ function AbrirChamado() {
       if (response.ok) {
         const result = await response.json(); // Pegue a resposta como JSON, assumindo que a resposta contém { id: ... }
         console.log('Resposta do servidor:', result);
+        alert("A inserção foi um sucesso!")
 
         // Dados para o log
         const chamadoDataLog = {
@@ -109,6 +110,8 @@ function AbrirChamado() {
     catch (error) {
       console.error('Erro na requisição:', error);
     }
+
+    window.location.href = '/'
   }
 
   function selecionarTipo(tipo) {
@@ -118,18 +121,18 @@ function AbrirChamado() {
   function selecionarTipoMudarCor(tipo) {
     let achados = document.getElementById('botaoAchados')
     let perdidos = document.getElementById('botaoPerdidos')
-    let todos = document.getElementById('botaoTodos')
+    
 
     if (tipo == 'achados') {
       achados.classList.add('selecionado')
       perdidos.classList.remove('selecionado')
-      todos.classList.remove('selecionado')
+      
     } else if (tipo == 'perdidos') {
       perdidos.classList.add('selecionado')
       achados.classList.remove('selecionado')
-      todos.classList.remove('selecionado')
+      
     } else {
-      todos.classList.add('selecionado')
+      
       perdidos.classList.remove('selecionado')
       achados.classList.remove('selecionado')
     }
