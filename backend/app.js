@@ -14,6 +14,7 @@ var itensRouter = require('./routes/itens')
 var app = express();
 
 const db = require('./db')
+const dbMongo = require('./dbMongo')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

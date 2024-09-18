@@ -25,15 +25,20 @@ async function getItemCategoria(tipo, categoria) {
     const sql = 'SELECT * FROM Item WHERE categoria = ? AND status_obj = ?';
     const response = await db.query(sql, [categoria, tipo]);
     return response[0];
-  }
-  
+}
+
 
 async function inserirItem(Item) {
-    const sql = 'INSERT INTO Item (matricula, nome, descricao, categoria, status_obj, imagem) VALUES (?, ?, ?, ?, ?, ?)'
-    const valores = [Item.matricula, Item.nome, Item.descricao, Item.categoria, Item.status_obj, Item.imagem]
-    const response = await db.query(sql, valores)
-    return response[0]
+    const sql = 'INSERT INTO Item (matricula, nome, descricao, categoria, status_obj, imagem) VALUES (?, ?, ?, ?, ?, ?)';
+    const valores = [Item.matricula, Item.nome, Item.descricao, Item.categoria, Item.status_obj, Item.imagem];
+
+    // Realiza a inserção no banco de dados
+    const response = await db.query(sql, valores);
+
+    // Retorna o objeto da resposta contendo o insertId
+    return { insertId: response[0].insertId };
 }
+
 
 async function atualizarItem(Item, id) {
     const sql = 'UPDATE Item SET nome = ?, descricao = ?, categoria = ?, status_obj = ?, imagem = ?, matricula = ? WHERE id LIKE ?'
