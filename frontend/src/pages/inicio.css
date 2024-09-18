@@ -11,6 +11,11 @@
     width: 100%;
 }
 
+#aba-senha {
+    margin: auto;
+    margin-top: 10em;
+}
+
 a {
     color: #000000;
     text-decoration: none; /* no underline */

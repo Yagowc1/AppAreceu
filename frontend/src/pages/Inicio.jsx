@@ -268,7 +268,7 @@ function Inicio() {
 
         :
 
-        <div className="wrapper">
+        <div id='aba-senha' className="wrapper">
           <form onSubmit={pegarDados} method='post'>
             <h1 className="titulo">Digite uma nova senha</h1>
             <div className="input-box">
