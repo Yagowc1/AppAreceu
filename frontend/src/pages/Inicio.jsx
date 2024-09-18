@@ -123,6 +123,28 @@ function Inicio() {
     setTipoItem(tipo);
   }
 
+  function selecionarTipoMudarCor(tipo) {
+    let achados = document.getElementById('botaoAchados')
+    let perdidos = document.getElementById('botaoPerdidos')
+    let todos = document.getElementById('botaoTodos')
+
+    if (tipo == 'achados') {
+      achados.classList.add('selecionado')
+      perdidos.classList.remove('selecionado')
+      todos.classList.remove('selecionado')
+    } else if (tipo == 'perdidos') {
+      perdidos.classList.add('selecionado')
+      achados.classList.remove('selecionado')
+      todos.classList.remove('selecionado')
+    } else {
+      todos.classList.add('selecionado')
+      perdidos.classList.remove('selecionado')
+      achados.classList.remove('selecionado')
+    }
+    
+    selecionarTipo(tipo)
+  }
+
   function selecionarCategoria(tipo) {
     setTipoCategoria(tipo);
   }
@@ -186,15 +208,15 @@ function Inicio() {
 
           <main className="main">
             <div id="switch-flex-ajustado">
-              <button className="switch-item selecionado"
+              <button className="switch-item selecionado" id='botaoAchados'
                 type='button'
-                onClick={() => selecionarTipo('achados')}
+                onClick={() => selecionarTipoMudarCor('achados')}
               >achados</button>
-              <button className="switch-item" type='button'
-                onClick={() => selecionarTipo('perdidos')}
+              <button className="switch-item" type='button' id='botaoPerdidos'
+                onClick={() => selecionarTipoMudarCor('perdidos')}
               >perdidos</button>
-              <button className="switch-item" type='button'
-                onClick={() => selecionarTipo('todos')}
+              <button className="switch-item" type='button' id='botaoTodos'
+                onClick={() => selecionarTipoMudarCor('todos')}
               >todos</button>
             </div>
             <div className="categorias-flex">

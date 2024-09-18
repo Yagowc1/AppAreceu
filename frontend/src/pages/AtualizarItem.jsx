@@ -74,12 +74,32 @@ function AtualizarItem() {
     setTipoItem(tipo);
   }
 
+  function selecionarTipoMudarCor(tipo) {
+    let achados = document.getElementById('botaoAchados')
+    let perdidos = document.getElementById('botaoPerdidos')
+    let todos = document.getElementById('botaoTodos')
+
+    if (tipo == 'achados') {
+      achados.classList.add('selecionado')
+      perdidos.classList.remove('selecionado')
+    } else if (tipo == 'perdidos') {
+      perdidos.classList.add('selecionado')
+      achados.classList.remove('selecionado')
+    } else {
+      perdidos.classList.remove('selecionado')
+      achados.classList.remove('selecionado')
+    }
+    
+    selecionarTipo(tipo)
+  }
+
+
   return (
     <>
       <div>
         <div className="header-container">
           <header className="header">
-            <a href="/"><img src="AppAreceu Logo.png" className="logo" alt="Logo"></img></a>
+            <a href="/"><b>Home</b></a>
           </header>
         </div>
 
@@ -126,18 +146,18 @@ function AtualizarItem() {
             </div>
 
             <div className="switch-flex">
-              <button
+              <button id='botaoAchados'
                 className={`switch-item`}
                 type='button'
-                onClick={() => selecionarTipo('achados')}
+                onClick={() => selecionarTipoMudarCor('achados')}
               >
                 Achados
               </button>
 
-              <button
+              <button id='botaoPerdidos'
                 className={`switch-item`}
                 type='button'
-                onClick={() => selecionarTipo('perdidos')}
+                onClick={() => selecionarTipoMudarCor('perdidos')}
               >
                 Perdidos
               </button>

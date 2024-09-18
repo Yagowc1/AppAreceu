@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import "./abrirChamado.css"; // Importando o CSS
 import axios from 'axios'
+import { UsuarioContext } from '../context/UsuarioContext';
 
 function AbrirChamado() {
   const [tipoItem, setTipoItem] = useState('achado');
+  const { usuario, setUsuario } = useContext(UsuarioContext)
 
   async function abrirChamado(e) {
     e.preventDefault();
@@ -24,6 +26,7 @@ function AbrirChamado() {
 
     const chamadoData = {
       nome: nome,
+      matricula: usuario.matricula,
       imagem: img,
       data: data,
       categoria: categoria,
@@ -107,8 +110,31 @@ function AbrirChamado() {
       console.error('Erro na requisição:', error);
     }
   }
+
   function selecionarTipo(tipo) {
     setTipoItem(tipo);
+  }
+
+  function selecionarTipoMudarCor(tipo) {
+    let achados = document.getElementById('botaoAchados')
+    let perdidos = document.getElementById('botaoPerdidos')
+    let todos = document.getElementById('botaoTodos')
+
+    if (tipo == 'achados') {
+      achados.classList.add('selecionado')
+      perdidos.classList.remove('selecionado')
+      todos.classList.remove('selecionado')
+    } else if (tipo == 'perdidos') {
+      perdidos.classList.add('selecionado')
+      achados.classList.remove('selecionado')
+      todos.classList.remove('selecionado')
+    } else {
+      todos.classList.add('selecionado')
+      perdidos.classList.remove('selecionado')
+      achados.classList.remove('selecionado')
+    }
+    
+    selecionarTipo(tipo)
   }
 
   return (
@@ -163,18 +189,18 @@ function AbrirChamado() {
             </div>
 
             <div className="switch-flex">
-              <button
+              <button id='botaoAchados'
                 className={`switch-item`}
                 type='button'
-                onClick={() => selecionarTipo('achados')}
+                onClick={() => selecionarTipoMudarCor('achados')}
               >
                 Achados
               </button>
 
-              <button
+              <button id='botaoPerdidos'
                 className={`switch-item`}
                 type='button'
-                onClick={() => selecionarTipo('perdidos')}
+                onClick={() => selecionarTipoMudarCor('perdidos')}
               >
                 Perdidos
               </button>
