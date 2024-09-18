@@ -175,11 +175,13 @@ function Inicio() {
     fetchData();
   }, [tipoItem, tipoCategoria]);
 
-  function logoutUsuario() {
+  async function logoutUsuario() {
     localStorage.clear()
-    cookieStore.getAll().then(cookies => cookies.forEach(cookie => {
+    await cookieStore.getAll().then(cookies => cookies.forEach(cookie => {
       cookieStore.delete(cookie.name);
     }));
+    
+    window.location.href = '/'
   }
 
   // Função para navegar para a página de visualização com os dados do item
@@ -197,7 +199,7 @@ function Inicio() {
 
               <nav className="navbar">
                 <a href="#"><span className="material-icons ajuda">help_outline</span></a>
-                <a href="/" onClick={logoutUsuario}>sair</a>
+                <a href="#" onClick={logoutUsuario}>sair</a>
                 <a href="/abrirChamado">
                   <button className="botao-chamado">abrir chamado</button>
                 </a>
