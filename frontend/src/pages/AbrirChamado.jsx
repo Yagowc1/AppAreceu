@@ -145,14 +145,14 @@ function AbrirChamado() {
               <div className="input-box">
                 <label htmlFor="categoria">Categoria do item:</label><br />
                 <select id="categoria" defaultValue='outro'>
-                  <option value="outro" disabled>Selecione a categoria</option>
-                  <option value="celular">celular</option>
+                  <option value="outros" disabled>Selecione a categoria</option>
+                  <option value="celulares">celular</option>
                   <option value="oculos">óculos</option>
-                  <option value="livro">livro</option>
-                  <option value="documento">documento</option>
-                  <option value="bolsa">bolsa</option>
-                  <option value="garrafa">garrafa</option>
-                  <option value="outro">outro</option>
+                  <option value="livros">livro</option>
+                  <option value="documentos">documento</option>
+                  <option value="bolsas">bolsa</option>
+                  <option value="garrafas">garrafa</option>
+                  <option value="outros">outro</option>
                 </select>
               </div>
             </div>

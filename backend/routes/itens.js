@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const path = require('path');
 
 const multer  = require('multer')
 
@@ -79,6 +80,9 @@ router.delete('/item/:id', async function (req, res) {
 router.post('/upload', upload.single("img"), function(req, res) {
   res.send(req.file.filename)
 })
+
+// Servir a pasta 'public/uploads' como estática
+router.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
 
 // Pegar os logs
 router.get('/logs', async (req, res, next) => {
