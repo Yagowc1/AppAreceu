@@ -157,7 +157,7 @@ function AbrirChamado() {
               <button
                 className={`switch-item`}
                 type='button'
-                onClick={() => selecionarTipo('achado')}
+                onClick={() => selecionarTipo('achados')}
               >
                 Achados
               </button>
@@ -165,7 +165,7 @@ function AbrirChamado() {
               <button
                 className={`switch-item`}
                 type='button'
-                onClick={() => selecionarTipo('perdido')}
+                onClick={() => selecionarTipo('perdidos')}
               >
                 Perdidos
               </button>
