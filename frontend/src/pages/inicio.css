@@ -156,7 +156,7 @@ a {
     display: grid;
     align-items: center;
     justify-content: center;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 440px));
     gap: 24px;
 }
 
