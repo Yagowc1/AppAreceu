@@ -25,7 +25,36 @@ function AbrirChamado() {
     // Exibe os dados no console
     console.log(chamadoData)
 
-    // Envia os dados para o servidor
+    //   // Envia os dados para o servidor
+    //   try {
+    //     const response = await fetch('http://localhost:3000/itens/item', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //       body: JSON.stringify(chamadoData),
+    //     })
+
+    //     if (response.ok) {
+    //       const result = await response.text();
+    //       console.log('Resposta do servidor:', result);
+    //       // alert('Cadastrado com sucesso')
+    //       const chamadoDataLog = {
+    //         item: result.id,
+    //         tipo_chamado: tipoItem,
+    //         responsavel: String,
+    //         datetime: { type: Date, default: Date.now }
+    //       }
+    //     } else {
+    //       console.error('Erro ao enviar dados:', response.statusText);
+    //     }
+    //   }
+    //   catch (error) {
+    //     console.error('Erro na requisição:', error);
+    //   }
+    // }
+
+    // Envia os dados para o servidor MySQL
     try {
       const response = await fetch('http://localhost:3000/itens/item', {
         method: 'POST',
@@ -33,101 +62,122 @@ function AbrirChamado() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(chamadoData),
-      })
+      });
 
       if (response.ok) {
-        const result = await response.text();
+        const result = await response.json(); // Pegue a resposta como JSON, assumindo que a resposta contém { id: ... }
         console.log('Resposta do servidor:', result);
-        alert('Cadastrado com sucesso')
+
+        // Dados para o log
+        const chamadoDataLog = {
+          item: result.id,  // ID retornado do MySQL
+          tipo_chamado: tipoItem,  // Tipo de operação (achado, devolvido, perdido, etc.)
+          responsavel: localStorage.getItem('email'),  // Substitua pelo nome ou ID do responsável
+          datetime: new Date().toISOString()  // Data atual no formato ISO
+        };
+
+        // Envia o log para o MongoDB
+        const logResponse = await fetch('http://localhost:3000/itens/logs/novo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(chamadoDataLog),
+        });
+
+        if (logResponse.ok) {
+          console.log('Log enviado com sucesso');
+        } else {
+          console.error('Erro ao enviar log:', logResponse.statusText);
+        }
       } else {
         console.error('Erro ao enviar dados:', response.statusText);
-        }
-      } 
+      }
+    }
     catch (error) {
       console.error('Erro na requisição:', error);
     }
   }
-
   function selecionarTipo(tipo) {
     setTipoItem(tipo);
   }
 
   return (
     <>
-        <div>
-            <div className="header-container">
-              <header className="header">
-                  <a href="/"><img src="AppAreceu Logo.png" className="logo" alt="Logo"></img></a>
-              </header>
+      <div>
+        <div className="header-container">
+          <header className="header">
+            <a href="/"><img src="AppAreceu Logo.png" className="logo" alt="Logo"></img></a>
+          </header>
+        </div>
+
+        <main className='main'>
+          <h1>Crie um novo chamado!</h1>
+
+          <form onSubmit={abrirChamado} className='form'>
+            <div className="flex">
+              <div className="input-box">
+                <label htmlFor="nome">Nome do item:</label><br />
+                <input type="text" id="nome" placeholder="exemplo: Garrafa da tupperware" />
+              </div>
+
+              <div className="input-box img-flex">
+                <label htmlFor="img" id="labelImg">Selecionar imagem</label><br />
+                <input type="file" id="img" />
+              </div>
             </div>
 
-            <main className='main'>
-              <h1>Crie um novo chamado!</h1>
-              
-              <form onSubmit={abrirChamado} className='form'>
-                <div className="flex">
-                  <div className="input-box">
-                      <label htmlFor="nome">Nome do item:</label><br/>
-                      <input type="text" id="nome" placeholder="exemplo: Garrafa da tupperware"/>
-                  </div>
+            <div className="flex">
+              <div className="input-box">
+                <label htmlFor="data">Data que o item foi achado/perdido:</label><br />
+                <input type="date" id="data" />
+              </div>
 
-                  <div className="input-box img-flex">
-                      <label htmlFor="img" id="labelImg">Selecionar imagem</label><br/>
-                      <input type="file" id="img"/>
-                  </div>
-                </div>
+              <div className="input-box">
+                <label htmlFor="categoria">Categoria do item:</label><br />
+                <select id="categoria" defaultValue='outro'>
+                  <option value="outro" disabled>Selecione a categoria</option>
+                  <option value="celular">celular</option>
+                  <option value="oculos">óculos</option>
+                  <option value="livro">livro</option>
+                  <option value="documento">documento</option>
+                  <option value="bolsa">bolsa</option>
+                  <option value="garrafa">garrafa</option>
+                  <option value="outro">outro</option>
+                </select>
+              </div>
+            </div>
 
-                <div className="flex">
-                  <div className="input-box">
-                      <label htmlFor="data">Data que o item foi achado/perdido:</label><br/>
-                      <input type="date" id="data"/>
-                  </div>
+            <div className="input-box">
+              <label htmlFor="descricao">Descrição do item:</label><br />
+              <textarea id="descricao" placeholder="exemplo: A garrafa é amarela e tem uma rachadura na parte de cima da tampa."></textarea>
+            </div>
 
-                  <div className="input-box">
-                      <label htmlFor="categoria">Categoria do item:</label><br/>
-                      <select id="categoria" defaultValue='outro'>
-                          <option value="outro" disabled>Selecione a categoria</option>
-                          <option value="celular">celular</option>
-                          <option value="oculos">óculos</option>
-                          <option value="livro">livro</option>
-                          <option value="documento">documento</option>
-                          <option value="bolsa">bolsa</option>
-                          <option value="garrafa">garrafa</option>
-                          <option value="outro">outro</option>
-                      </select>
-                  </div>
-                </div>
+            <div className="switch-flex">
+              <button
+                className={`switch-item`}
+                type='button'
+                onClick={() => selecionarTipo('achado')}
+              >
+                Achados
+              </button>
 
-                <div className="input-box">
-                  <label htmlFor="descricao">Descrição do item:</label><br/>
-                  <textarea id="descricao" placeholder="exemplo: A garrafa é amarela e tem uma rachadura na parte de cima da tampa."></textarea>
-                </div>
+              <button
+                className={`switch-item`}
+                type='button'
+                onClick={() => selecionarTipo('perdido')}
+              >
+                Perdidos
+              </button>
+            </div>
 
-                <div className="switch-flex">
-                  <button
-                    className={`switch-item`}
-                    type='button'
-                    onClick={() => selecionarTipo('achado')}
-                  >
-                    Achados
-                  </button>
+            <div className="div-botao">
+              <button className="botao-enviar" type='submit'>Enviar</button>
+            </div>
 
-                  <button
-                    className={`switch-item`}
-                    type='button'
-                    onClick={() => selecionarTipo('perdido')}
-                  >
-                    Perdidos
-                  </button>
-                </div>
-
-                <div className="div-botao">
-                  <button className="botao-enviar" type='submit'>Enviar</button>
-                </div>
-
-              </form>
-            </main>
-        </div>
+          </form>
+        </main>
+      </div>
     </>
   )
 }
