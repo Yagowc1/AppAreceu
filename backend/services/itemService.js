@@ -22,6 +22,13 @@ async function getItemEmail(id) {
 
 // Receber um item por categoria
 async function getItemCategoria(tipo, categoria) {
+    if (tipo == 'todos') {
+        const sql = `SELECT * FROM Item WHERE categoria = ?`;
+        const response = await db.query(sql, categoria);
+        
+        return response[0];        
+    }
+
     const sql = 'SELECT * FROM Item WHERE categoria = ? AND status_obj = ?';
     const response = await db.query(sql, [categoria, tipo]);
     return response[0];
