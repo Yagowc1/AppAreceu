@@ -155,6 +155,9 @@ function Inicio() {
 
   function logoutUsuario() {
     localStorage.clear()
+    cookieStore.getAll().then(cookies => cookies.forEach(cookie => {
+      cookieStore.delete(cookie.name);
+    }));
   }
 
   // Função para navegar para a página de visualização com os dados do item
