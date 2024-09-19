@@ -5,7 +5,7 @@ const item = require('../models/item')
 async function getItens() {
     // const response = await db.query('SELECT * FROM Item')
     const response = await item.find()
-    return response[0]
+    return response
 }
 
 // Receber um item especifico
@@ -51,12 +51,12 @@ async function getItemCategoria(tipo, categoria) {
         // const sql = `SELECT * FROM Item WHERE categoria = ?`;
         const response = await item.find({"categoria":`${categoria}`})
         
-        return response[0];        
+        return response;        
     }
 
     // const sql = 'SELECT * FROM Item WHERE categoria = ? AND status_obj = ?';
     const response = await item.find({"categoria":`${categoria}`, "status_obj":`${tipo}`})
-    return response[0];
+    return response;
 }
 
 
