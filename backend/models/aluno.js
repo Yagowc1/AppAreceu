@@ -4,7 +4,7 @@ const AlunoSchema = new mongoose.Schema({
     nome:String,
     matricula:String,
     email:String,
-    senha:Number,
+    senha:String,
     adm:Boolean
 }, {collection:'aluno'})
 

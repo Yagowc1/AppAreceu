@@ -9,6 +9,7 @@ router.get('/adm', async function(req, res, next) {
 });
 
 router.get('/aluno', async function(req, res, next) {
+  console.log('opa')
   const aluno = await usuarioService.getAlunos()
   res.send(aluno);
 });

@@ -19,14 +19,17 @@ async function getAluno(matricula) {
 }
 
 async function inserirAluno(alunoParam) {
-    const response = await aluno.insertOne({"matricula":`${alunoParam.matricula}`, "nome":`${alunoParam.nome}`, "email":`${alunoParam.email}`, "senha":`${alunoParam.senha}`})
+    const response = await aluno.create({"matricula":`${alunoParam.matricula}`, "nome":`${alunoParam.nome}`, "email":`${alunoParam.email}`, "senha":`${alunoParam.senha}`})
     return response[0]
 }
 
 async function atualizarAluno(alunoParam, matricula) {
     // const sql = 'UPDATE aluno SET nome = ?, email = ?, senha = ? WHERE matricula LIKE ?'
     // const valores = [aluno.nome, aluno.email, aluno.senha, matricula]
-    const response = await aluno.updateOne({"matricula":`${matricula}`}, {$set:{"nome":`${alunoParam.nome}`}, $set:{"email":`${alunoParam.email}`}, $set:{"senha":`${alunoParam.senha}`}})
+    const response = await aluno.updateOne({"matricula":`${matricula}`}, 
+        {$set:{nome:`${alunoParam.nome}`, 
+        email:`${alunoParam.email}`, 
+        senha:`${alunoParam.senha}`}})
 
     return response[0]
 }
@@ -41,7 +44,6 @@ async function fazerLoginAluno(usuario) {
     console.log(usuario.matricula)
     // const sql = 'SELECT * FROM aluno WHERE matricula LIKE ?'
     let response = await aluno.find({"matricula":`${usuario.matricula}`})
-    response = response[0]
     
     if (response.length > 0) {
         response = response[0]
@@ -51,7 +53,7 @@ async function fazerLoginAluno(usuario) {
             nome: response.nome,
             email: response.email,
             senha: response.senha,
-            adm: response.adm
+            adm: 0
         }
 
         console.log(usuario.senha, aluno)
@@ -69,7 +71,6 @@ async function fazerLoginAluno(usuario) {
 async function fazerLoginAdm(usuario) {
     // const sql = 'SELECT * FROM administrador WHERE email LIKE ?'
     let response = await administrador.find({"email":`${usuario.email}`})
-    response = response[0]
 
     if (response.length > 0) {
         response = response[0]
