@@ -15,9 +15,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-const Logs = require('../models/Logs')
-
-
 const itemService = require('../services/itemService')
 
 // Receber todos os itens
@@ -83,34 +80,5 @@ router.post('/upload', upload.single("img"), function(req, res) {
 
 // Servir a pasta 'public/uploads' como estática
 router.use('/uploads', express.static(path.join(__dirname, 'public/uploads')));
-
-// Pegar os logs
-router.get('/logs', async (req, res, next) => {
-  try {
-    const logsData = await Logs.find()
-    res.status(200).json(logsData)
-  } catch (error) {
-    res.status(500).json({ error: error })
-  }
-});
-
-// Inserir novo log
-router.post('/logs/novo', async (req, res) => {
-  // Pega os dados do corpo da requisição
-  let logsNovo = {
-    item: req.body.item,
-    tipo_chamado: req.body.tipo_chamado,
-    responsavel: req.body.responsavel,
-    datetime: req.body.datetime || Date.now()
-  }
-
-  try {
-    await Logs.create(logsNovo)
-    res.status(201).send("Log cadastrado com sucesso")
-  } catch (error) {
-    res.status(500).json({ error: error })
-  }
-
-})
 
 module.exports = router;

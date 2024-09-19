@@ -3,11 +3,13 @@ var router = express.Router();
 
 const usuarioService = require('../services/usuarioService')
 
+// Retorna todos os adms
 router.get('/adm', async function(req, res, next) {
   const adm = await usuarioService.getAdministrador()
   res.send(adm);
 });
 
+// Retorna todos os alunos
 router.get('/aluno', async function(req, res, next) {
   console.log('opa')
   const aluno = await usuarioService.getAlunos()

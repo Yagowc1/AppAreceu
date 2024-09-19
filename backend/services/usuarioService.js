@@ -5,12 +5,12 @@ const administrador = require('../models/administrador')
 
 async function getAdministrador() {
     const response = await administrador.find()
-    return response[0]
+    return response
 }
 
 async function getAlunos() {
     const response = await aluno.find()
-    return response[0]
+    return response
 }
 
 async function getAluno(matricula) {
@@ -19,7 +19,7 @@ async function getAluno(matricula) {
 }
 
 async function inserirAluno(alunoParam) {
-    const response = await aluno.create({"matricula":`${alunoParam.matricula}`, "nome":`${alunoParam.nome}`, "email":`${alunoParam.email}`, "senha":`${alunoParam.senha}`})
+    const response = await aluno.create({"matricula":`${alunoParam.matricula}`, "nome":`${alunoParam.nome}`, "email":`${alunoParam.email}`, "senha":`${alunoParam.senha}`, "adm":'0'})
     return response[0]
 }
 
